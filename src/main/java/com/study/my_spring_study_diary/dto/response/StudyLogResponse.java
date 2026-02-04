@@ -23,8 +23,8 @@ public class StudyLogResponse {
     private String understandingEmoji;
     private Integer studyTime;
     private LocalDate studyDate;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public StudyLogResponse() {
     }
@@ -40,8 +40,8 @@ public class StudyLogResponse {
         response.understandingEmoji = studyLog.getUnderstanding().getEmoji();
         response.studyTime = studyLog.getStudyTime();
         response.studyDate = studyLog.getStudyDate();
-        response.createAt = studyLog.getCreateAt();
-        response.updateAt = studyLog.getUpdateAt();
+        response.createdAt = studyLog.getCreatedAt();
+        response.updatedAt = studyLog.getUpdatedAt();
         return response;
     }
 
@@ -81,11 +81,11 @@ public class StudyLogResponse {
         return studyDate;
     }
 
-    public LocalDateTime getCreateAt() {
-        return createAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
