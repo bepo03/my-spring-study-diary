@@ -66,3 +66,62 @@ GET http://localhost:8080/api/v1/logs/page?page=0&size=3&sortBy=studyTime&sortDi
 
 ### SPRING 카테고리만 페이징 조회
 GET http://localhost:8080/api/v1/logs/category/SPRING/page?page=0&size=2
+
+### 학습 일지 생성
+POST http://localhost:8080/api/v1/logs
+Content-Type: application/json
+
+{
+  "title": "AOP 관점 지향 프로그래밍",
+  "content": "Aspect, Advice, Pointcut 개념 학습",
+  "category": "SPRING",
+  "understanding": "BAD",
+  "studyTime": 150,
+  "studyDate": "2025-01-16"
+}
+
+### 제목과 이해도만 수정
+PUT http://localhost:8080/api/v1/logs/1
+Content-Type: application/json
+
+{
+    "title": "AOP 관점 지향 프로그래밍 (복습 완료)",
+    "understanding": "GOOD"
+}
+
+### 학습 시간만 수정
+PUT http://localhost:8080/api/v1/logs/1
+Content-Type: application/json
+
+{"studyTime": 200}
+
+### 전체 내용 수정
+PUT http://localhost:8080/api/v1/logs/1
+Content-Type: application/json
+
+{
+    "title": "AOP 완벽 정복",
+    "content": "Aspect, Advice, Pointcut, JoinPoint 완벽히 이해함. 프록시 패턴 기반 동작 원리 파악.",
+    "category": "SPRING",
+    "understanding": "VERY_GOOD",
+    "studyTime": 250,
+    "studyDate": "2025-01-17"
+}
+
+### 존재하지 않는 ID
+PUT http://localhost:8080/api/v1/logs/999
+Content-Type: application/json
+
+{"title": "테스트"}
+
+### 빈 요청 (수정할 내용 없음)
+PUT http://localhost:8080/api/v1/logs/1
+Content-Type: application/json
+
+{}
+
+### 유효하지 않은 카테고리
+PUT http://localhost:8080/api/v1/logs/1
+Content-Type: application/json
+
+{"category": "INVALID"}

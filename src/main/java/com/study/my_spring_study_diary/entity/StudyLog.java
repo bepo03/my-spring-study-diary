@@ -1,18 +1,40 @@
 package com.study.my_spring_study_diary.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.cglib.core.Local;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class StudyLog {
 
+    @Getter
+    @Setter
     private Long id;
+    @Getter
+    @Setter
     private String title;
+    @Getter
+    @Setter
     private String content;
+    @Getter
+    @Setter
     private Category category;
+    @Getter
+    @Setter
     private Understanding understanding;
+    @Getter
+    @Setter
     private Integer studyTime;
+    @Getter
+    @Setter
     private LocalDate studyDate;
+    @Getter
+    @Setter
     private LocalDateTime createdAt;
+    @Getter
+    @Setter
     private LocalDateTime updatedAt;
 
     public StudyLog() {
@@ -30,75 +52,34 @@ public class StudyLog {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
+    /**
+     * 학습 일지 정보 수정
+     * <p>
+     * null이 아닌 값만 업데이트 합니다.
+     * 이 방식을 "Dirty Checking" 또는 "Partial Update" 라고 합니다.
+     */
+    public void update(String title, String content, Category category, Understanding understanding, Integer studyTime, LocalDate studyDate) {
+        // null이 아닌 경우에만 업데이트
+        if (title != null) {
+            this.title = title;
+        }
+        if (content != null) {
+            this.content = content;
+        }
+        if (category != null) {
+            this.category = category;
+        }
+        if (understanding != null) {
+            this.understanding = understanding;
+        }
+        if (studyTime != null) {
+            this.studyTime = studyTime;
+        }
+        if (studyDate != null) {
+            this.studyDate = studyDate;
+        }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public Understanding getUnderstanding() {
-        return understanding;
-    }
-
-    public Integer getStudyTime() {
-        return studyTime;
-    }
-
-    public LocalDate getStudyDate() {
-        return studyDate;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public void setUnderstanding(Understanding understanding) {
-        this.understanding = understanding;
-    }
-
-    public void setStudyTime(Integer studyTime) {
-        this.studyTime = studyTime;
-    }
-
-    public void setStudyDate(LocalDate studyDate) {
-        this.studyDate = studyDate;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        // 수정 시간 갱신
+        this.updatedAt = LocalDateTime.now();
     }
 }

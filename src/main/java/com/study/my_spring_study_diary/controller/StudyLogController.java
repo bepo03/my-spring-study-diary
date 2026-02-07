@@ -1,6 +1,7 @@
 package com.study.my_spring_study_diary.controller;
 
 import com.study.my_spring_study_diary.dto.request.StudyLogCreateRequest;
+import com.study.my_spring_study_diary.dto.request.StudyLogUpdateRequest;
 import com.study.my_spring_study_diary.dto.response.StudyLogResponse;
 import com.study.my_spring_study_diary.entity.StudyLog;
 import com.study.my_spring_study_diary.global.common.ApiResponse;
@@ -30,6 +31,8 @@ public class StudyLogController {
         this.studyLogService = studyLogService;
     }
 
+    // ==================== CREATE (Day 1) ====================
+
     /**
      * 학습 일지 생성 (CREATE)
      * {@code @PostMapping}  POST 요청을 처리
@@ -37,13 +40,16 @@ public class StudyLogController {
      * POST /api/v1/logs
      */
     @PostMapping
-    public StudyLogResponse createStudyLog(
+    public ResponseEntity<ApiResponse<StudyLogResponse>> createStudyLog(
             @RequestBody
             StudyLogCreateRequest request
     ) {
         // Service 호출하여 학습 일지 생성
-        return studyLogService.createStudyLog(request);
+        StudyLogResponse response = studyLogService.createStudyLog(request);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
+
+    // ==================== READ (Day 2) ====================
 
     /**
      * 모든 학습 일지 조회 (READ - ALL)
@@ -51,9 +57,11 @@ public class StudyLogController {
      * GET /api/v1/logs
      */
     @GetMapping
-    public List<StudyLogResponse> getAllStudyLogs() {
+    public ResponseEntity<ApiResponse<List<StudyLogResponse>>> getAllStudyLogs() {
         // Service 호출하여 모든 학습 일지 조회
-        return studyLogService.getAllStudyLogs();
+        List<StudyLogResponse> responses = studyLogService.getAllStudyLogs();
+        return ResponseEntity.ok(ApiResponse.success(responses));
+
     }
 
     /**
@@ -63,12 +71,13 @@ public class StudyLogController {
      * GET /api/v1/logs/{id}
      */
     @GetMapping("/{id}")
-    public StudyLogResponse getStudyLogById(
+    public ResponseEntity<ApiResponse<StudyLogResponse>> getStudyLogById(
             @PathVariable
             Long id
     ) {
         // Service 호출하여 ID로 학습 일지 조회
-        return studyLogService.getStudyLogById(id);
+        StudyLogResponse response =  studyLogService.getStudyLogById(id);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     /**
@@ -79,28 +88,31 @@ public class StudyLogController {
      * 예시: GET /api/v1/logs/date/2025-01-15
      */
     @GetMapping("/date/{date}")
-    public List<StudyLogResponse> getStudyLogsByDate(
+    public ResponseEntity<ApiResponse<List<StudyLogResponse>>> getStudyLogsByDate(
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
         // Service 호출하여 날짜로 학습 일지 조회
-        return studyLogService.getStudyLogsByDate(date);
+        List<StudyLogResponse> responses = studyLogService.getStudyLogsByDate(date);
+        return ResponseEntity.ok(ApiResponse.success(responses));
+
     }
 
     /**
      * 카테고리별 학습 일지 조회 (READ - By Category)
-     * @GetMapping("/category/{category}") GET 요청을 처리 (카테코리 경로 변수 포함)
-     * @PathVariable URL 경로의 {category} 값을 매개변수로 받음
+     * {@code @GetMapping("/category/{category}")} GET 요청을 처리 (카테코리 경로 변수 포함)
+     * {@code @PathVariable} URL 경로의 {category} 값을 매개변수로 받음
      * GET /api/v1/logs/category/{category}
      * 예시: GET /api/v1/logs/category/SPRING
      *       GET /api/v1/logs/category/JAVA
      */
     @GetMapping("/category/{category}")
-    public List<StudyLogResponse> getStudyLogsByCategory(
+    public ResponseEntity<ApiResponse<List<StudyLogResponse>>> getStudyLogsByCategory(
             @PathVariable
             String category
     ) {
         // Service 호출하여 카테고리로 학습 일지 조회
-        return studyLogService.getStudyLogsByCategory(category);
+        List<StudyLogResponse> responses = studyLogService.getStudyLogsByCategory(category);
+        return ResponseEntity.ok(ApiResponse.success(responses));
     }
 
     /**
@@ -108,11 +120,12 @@ public class StudyLogController {
      * GET /api/v1/logs/page?page=0&size=1&sortBy=createdAt&sortDirection=DESC
      */
     @GetMapping("/page")
-    public PageResponse<StudyLogResponse> getStudyLogWithPaging(
+    public ResponseEntity<ApiResponse<PageResponse<StudyLogResponse>>> getStudyLogWithPaging(
             @ModelAttribute
             PageRequest pageRequest
     ) {
-        return studyLogService.getStudyLogWithPaging(pageRequest);
+        PageResponse<StudyLogResponse> response = studyLogService.getStudyLogWithPaging(pageRequest);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     /**
@@ -120,12 +133,35 @@ public class StudyLogController {
      * GET /api/v1/logs/category/{category}/page?page=0&size=5
      */
     @GetMapping("/category/{category}/page")
-    public PageResponse<StudyLogResponse> getStudyLogsByCategoryWithPaging(
+    public ResponseEntity<ApiResponse<PageResponse<StudyLogResponse>>> getStudyLogsByCategoryWithPaging(
             @PathVariable
             String category,
             @ModelAttribute
             PageRequest pageRequest
     ) {
-        return studyLogService.getStudyLogsByCategoryWithPaging(category, pageRequest);
+        PageResponse<StudyLogResponse> response = studyLogService.getStudyLogsByCategoryWithPaging(category, pageRequest);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // ==================== UPDATE (Day 3) ====================
+
+    /**
+     * 학습 일지 수정
+     * PUT /api/v1/logs/{id}
+     *
+     * {@code @PutMapping} PUT 요청을 처리하는 어노테이션
+     *                     리소스의 전체 또는 일부를 수정할 때 사용
+     * {@code @PathVariable} URL의 {id} 부분을 파라미터로 받음
+     * {@code @RequestBody} HTTP Body의 JSON을 객체로 변환
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<StudyLogResponse>> updateStudyLog(
+            @PathVariable
+            Long id,
+            @RequestBody
+            StudyLogUpdateRequest request
+    ) {
+        StudyLogResponse response = studyLogService.updateStudyLog(id, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 }
