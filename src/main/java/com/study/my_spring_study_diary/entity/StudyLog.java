@@ -7,35 +7,23 @@ import org.springframework.cglib.core.Local;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class StudyLog {
 
-    @Getter
-    @Setter
     private Long id;
-    @Getter
-    @Setter
     private String title;
-    @Getter
-    @Setter
     private String content;
-    @Getter
-    @Setter
     private Category category;
-    @Getter
-    @Setter
     private Understanding understanding;
-    @Getter
-    @Setter
     private Integer studyTime;
-    @Getter
-    @Setter
     private LocalDate studyDate;
-    @Getter
-    @Setter
     private LocalDateTime createdAt;
-    @Getter
-    @Setter
     private LocalDateTime updatedAt;
+
+    // Entity에 삭제 플래그 추가
+    private boolean deleted = false;    // Soft Delete 플래그
+    private LocalDateTime deletedAt;    // 삭제 시점
 
     public StudyLog() {
     }

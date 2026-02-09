@@ -25,6 +25,15 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error("INVALID_INPUT", e.getMessage()));
     }
 
+    @ExceptionHandler(StudyLogNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleStudyLogNotFoundException(
+            StudyLogNotFoundException e
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error("STUDY_LOG_NOT_FOUND", e.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleException(
             Exception e
