@@ -1,8 +1,42 @@
+# 서버 설정
+server:
+  port: 8081
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+
+# Spring 설정
 spring:
   application:
     name: my-spring-study-diary
-    debug: true
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+  # MySQL 데이터베이스 설정
+  datasource:
+    url: jdbc:mysql://localhost:3306/diary_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: rootpass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 30_000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 600_000
+      pool-name: StudyDiaryHikariCP
+
+  # SQL 로깅 설정
+  sql:
+    init:
+      mode: always
+      platform: mysql
+      encoding: utf-8
+
+# 로깅 설정
+logging:
+  level:
+    root: INFO
+    com.study.my_spring_study_diary: DEBUG
+    org.springframework.jdbc: DEBUG
+    com.zaxxer.hikari: DEBUG

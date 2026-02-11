@@ -1,5 +1,6 @@
+### CREATE TEST
 ### 학습 일지 1 생성
-POST http://localhost:8080/api/v1/logs
+POST http://localhost:8081/api/v1/logs
 Content-Type: application/json
 
 {
@@ -12,7 +13,7 @@ Content-Type: application/json
 }
 
 ### 학습 일지 2 생성
-POST http://localhost:8080/api/v1/logs
+POST http://localhost:8081/api/v1/logs
 Content-Type: application/json
 
 {
@@ -25,7 +26,7 @@ Content-Type: application/json
   }
 
 ### 학습 일지 3 생성
-POST http://localhost:8080/api/v1/logs
+POST http://localhost:8081/api/v1/logs
 Content-Type: application/json
 
 {
@@ -37,38 +38,40 @@ Content-Type: application/json
     "studyDate": "2025-01-16"
 }
 
+### READ TEST
 ### 전체 목록 조회
-GET http://localhost:8080/api/v1/logs
+GET http://localhost:8081/api/v1/logs
 
 ### ID로 단건 조회
-GET http://localhost:8080/api/v1/logs/1
+GET http://localhost:8081/api/v1/logs/1
 
 ### 존재하지 않는 ID 조회 (에러 테스트)
-GET http://localhost:8080/api/v1/logs/999
+GET http://localhost:8081/api/v1/logs/999
 
 ### 날짜별 조회
-GET http://localhost:8080/api/v1/logs/date/2025-01-15
+GET http://localhost:8081/api/v1/logs/date/2025-01-15
 
 ### 카테고리별 조회1
-GET http://localhost:8080/api/v1/logs/category/SPRING
+GET http://localhost:8081/api/v1/logs/category/SPRING
 
 ### 카테고리별 조회2
-GET http://localhost:8080/api/v1/logs/category/JAVA
+GET http://localhost:8081/api/v1/logs/category/JAVA
 
 ### 첫 번째 페이지 조회 (0부터 시작, 5개씩)
-GET http://localhost:8080/api/v1/logs/page?page=0&size=5
+GET http://localhost:8081/api/v1/logs/page?page=0&size=5
 
 ### 두 번째 페이지 조회
-GET http://localhost:8080/api/v1/logs/page?page=1&size=5
+GET http://localhost:8081/api/v1/logs/page?page=1&size=5
 
 ### 학습 시간순 정렬, 페이지당 3개
-GET http://localhost:8080/api/v1/logs/page?page=0&size=3&sortBy=studyTime&sortDirection=ASC
+GET http://localhost:8081/api/v1/logs/page?page=0&size=3&sortBy=studyTime&sortDirection=ASC
 
 ### SPRING 카테고리만 페이징 조회
-GET http://localhost:8080/api/v1/logs/category/SPRING/page?page=0&size=2
+GET http://localhost:8081/api/v1/logs/category/SPRING/page?page=0&size=2
 
+### UPDATE TEST
 ### 학습 일지 생성
-POST http://localhost:8080/api/v1/logs
+POST http://localhost:8081/api/v1/logs
 Content-Type: application/json
 
 {
@@ -81,7 +84,7 @@ Content-Type: application/json
 }
 
 ### 제목과 이해도만 수정
-PUT http://localhost:8080/api/v1/logs/1
+PUT http://localhost:8081/api/v1/logs/1
 Content-Type: application/json
 
 {
@@ -90,13 +93,13 @@ Content-Type: application/json
 }
 
 ### 학습 시간만 수정
-PUT http://localhost:8080/api/v1/logs/1
+PUT http://localhost:8081/api/v1/logs/1
 Content-Type: application/json
 
 {"studyTime": 200}
 
 ### 전체 내용 수정
-PUT http://localhost:8080/api/v1/logs/1
+PUT http://localhost:8081/api/v1/logs/1
 Content-Type: application/json
 
 {
@@ -109,26 +112,26 @@ Content-Type: application/json
 }
 
 ### 존재하지 않는 ID
-PUT http://localhost:8080/api/v1/logs/999
+PUT http://localhost:8081/api/v1/logs/999
 Content-Type: application/json
 
 {"title": "테스트"}
 
 ### 빈 요청 (수정할 내용 없음)
-PUT http://localhost:8080/api/v1/logs/1
+PUT http://localhost:8081/api/v1/logs/1
 Content-Type: application/json
 
 {}
 
 ### 유효하지 않은 카테고리
-PUT http://localhost:8080/api/v1/logs/1
+PUT http://localhost:8081/api/v1/logs/1
 Content-Type: application/json
 
 {"category": "INVALID"}
 
 ### DLETE TEST
 ### 학습 일지 생성
-POST http://localhost:8080/api/v1/logs
+POST http://localhost:8081/api/v1/logs
 Content-Type: application/json
 
 {
@@ -141,16 +144,16 @@ Content-Type: application/json
 }
 
 ### 전체 목록 조회
-GET http://localhost:8080/api/v1/logs
+GET http://localhost:8081/api/v1/logs
 
 ### ID가 1인 학습 일지 삭제
-DELETE http://localhost:8080/api/v1/logs/1
+DELETE http://localhost:8081/api/v1/logs/1
 
 ### 삭제된 ID로 조회 시도
-GET http://localhost:8080/api/v1/logs/1
+GET http://localhost:8081/api/v1/logs/1
 
 ### 존재하지 않는 ID 삭제 시도
-DELETE http://localhost:8080/api/v1/logs/99
+DELETE http://localhost:8081/api/v1/logs/99
 
 ### 전체 학습 일지 삭제
-DELETE http://localhost:8080/api/v1/logs
+DELETE http://localhost:8081/api/v1/logs
