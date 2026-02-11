@@ -1,5 +1,6 @@
 package com.study.my_spring_study_diary.dao;
 
+import com.study.my_spring_study_diary.common.Page;
 import com.study.my_spring_study_diary.entity.Category;
 import com.study.my_spring_study_diary.entity.StudyLog;
 import com.study.my_spring_study_diary.entity.Understanding;
@@ -13,6 +14,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,13 +104,6 @@ public class MySQLStudyLogDaoImpl implements StudyLogDao {
         return count != null && count > 0;
     }
 
-    @Override
-    public long count() {
-        String sql = "SELECT COUNT(*) FROM study_logs";
-        Long count = jdbcTemplate.queryForObject(sql, Long.class);
-        return count != null ? count : 0;
-    }
-
     // ==================== UPDATE ====================
 
     @Override
@@ -150,6 +145,125 @@ public class MySQLStudyLogDaoImpl implements StudyLogDao {
     public void deleteAll() {
         String sql = "DELETE FROM study_logs";
         jdbcTemplate.update(sql);
+    }
+
+    // ==================== PAGING ====================
+
+    @Override
+    public Page<StudyLog> findAllWithPaging(int page, int size) {
+        // 1단계: 전체 개수 조회
+        String countSql = "SELECT COUNT(*) FROM study_logs";
+        Long totalElements = jdbcTemplate.queryForObject(countSql, Long.class);
+
+        // 전체 데이터가 0건이면 빈 페이지 반환
+        if (totalElements == null || totalElements == 0) {
+            return new Page<>(List.of(), page, size, 0);
+        }
+
+        // 2단계: 해당 페이지 데이터 조회
+        String dataSql = """
+                SELECT * FROM study_logs
+                ORDER BY study_date DESC, id DESC
+                LIMIT ? OFFSET ?
+                """;
+
+        int offset = page * size;
+        List<StudyLog> content = jdbcTemplate.query(dataSql, studyLogRowMapper, size, offset);
+
+        // 3.단계: Page 객체 생성 및 반환
+        return new Page<>(content, page, size, totalElements);
+    }
+
+    @Override
+    public Page<StudyLog> findByCategoryWithPaging(String category, int page, int size) {
+        // COUNT 쿼리에도 동일한 WHERE 조건 적용
+        String countSql = "SELECT COUNT(*) FROM study_logs WHERE category = ?";
+        Long totalElements = jdbcTemplate.queryForObject(countSql, Long.class, category);
+
+        // 전체 데이터가 0건이면 빈 페이지 반환
+        if (totalElements == null || totalElements == 0) {
+            return new Page<>(List.of(), page, size, 0);
+        }
+
+        // 2단계: 해당 페이지 데이터 조회
+        String dataSql = """
+                SELECT * FROM study_logs
+                WHERE category = ?
+                ORDER BY study_date DESC, id DESC
+                LIMIT ? OFFSET ?
+                """;
+
+        int offset = page * size;
+        List<StudyLog> content = jdbcTemplate.query(dataSql, studyLogRowMapper, category, size, offset);
+
+        // 3.단계: Page 객체 생성 및 반환
+        return new Page<>(content, page, size, totalElements);
+    }
+
+    @Override
+    public Page<StudyLog> searchWithPaging(String titleKeyword, String category, LocalDate startDate, LocalDate endDate, int page, int size) {
+        // 공통 WHERE 절 구성
+        StringBuilder whereClause = new StringBuilder("WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        if (titleKeyword != null && !titleKeyword.isBlank()) {
+            whereClause.append(" AND title LIKE ?");
+            params.add("%" + titleKeyword + "%");
+        }
+
+        if (category != null && !category.isBlank()) {
+            whereClause.append(" AND category = ?");
+            params.add(category);
+        }
+
+        if (startDate != null) {
+            whereClause.append(" AND study_date >= ?");
+            params.add(Date.valueOf(startDate));
+        }
+
+        if (endDate != null) {
+            whereClause.append(" AND study_date <= ?");
+            params.add(Date.valueOf(endDate));
+        }
+
+        // 1단계: COUNT 쿼리 (WHERE 절 재사용)
+        String countSql = "SELECT COUNT(*) FROM study_logs " + whereClause;
+        Long totalElements = jdbcTemplate.queryForObject(countSql, Long.class, params.toArray());
+
+        // 전체 데이터가 0건이면 빈 페이지 반환
+        if (totalElements == null || totalElements == 0) {
+            return new Page<>(List.of(), page, size, 0);
+        }
+
+        // 2단계: 데이터 쿼리 (WHERE 절 재사용 + 페이징)
+        String dataSql = "SELECT * FROM study_logs "
+                + whereClause
+                + " ORDER BY study_date DESC, id DESC"
+                + " LIMIT ? OFFSET ?";
+
+        // 페이징 파라미터를 기존 파라미터에 추가
+        List<Object> dataParams = new ArrayList<>(params);
+        dataParams.add(size);
+        dataParams.add(page * size);
+
+        List<StudyLog> content = jdbcTemplate.query(dataSql, studyLogRowMapper, dataParams.toArray());
+
+        // 3.단계: Page 객체 생성 및 반환
+        return new Page<>(content, page, size, totalElements);
+    }
+
+    @Override
+    public long countByCategory(String category) {
+        String sql = "SELECT COUNT(*) FROM study_logs WHERE category = ?";
+        Long count = jdbcTemplate.queryForObject(sql, Long.class, category);
+        return count != null ? count : 0;
+    }
+
+    @Override
+    public long count() {
+        String sql = "SELECT COUNT(*) FROM study_logs";
+        Long count = jdbcTemplate.queryForObject(sql, Long.class);
+        return count != null ? count : 0;
     }
 
     // ==================== PRIVATE METHODS ====================

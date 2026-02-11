@@ -1,13 +1,11 @@
 package com.study.my_spring_study_diary.controller;
 
+import com.study.my_spring_study_diary.common.Page;
 import com.study.my_spring_study_diary.dto.request.StudyLogCreateRequest;
 import com.study.my_spring_study_diary.dto.request.StudyLogUpdateRequest;
 import com.study.my_spring_study_diary.dto.response.StudyLogDeleteResponse;
 import com.study.my_spring_study_diary.dto.response.StudyLogResponse;
-import com.study.my_spring_study_diary.entity.StudyLog;
 import com.study.my_spring_study_diary.global.common.ApiResponse;
-import com.study.my_spring_study_diary.global.common.PageRequest;
-import com.study.my_spring_study_diary.global.common.PageResponse;
 import com.study.my_spring_study_diary.service.StudyLogService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -159,17 +157,25 @@ public class StudyLogController {
                 .body(ApiResponse.success(responses));
     }
 
+    // ==================== PAGING ====================
+
     /**
-     * 페이징 처리된 학습 일지 목록 조회
-     * <p>
-     * GET /api/v1/logs/page?page=0&size=1&sortBy=createdAt&sortDirection=DESC
+     * 전체 학습 일지 페이징 조회
+     * GET /api/v1/logs/page?page=0&size=10
+     * GET /api/v1/logs/page -> 기본값 page=0, size=10
+     *
+     * @param page 페이지 번호 (0-based, 기본값: 0)
+     * @param size 페이지 크기 (기본값: 10, 최대값: 100)
+     * @return 페이징된 학습 일지
      */
     @GetMapping("/page")
-    public ResponseEntity<ApiResponse<PageResponse<StudyLogResponse>>> getStudyLogWithPaging(
-            @ModelAttribute
-            PageRequest pageRequest
+    public ResponseEntity<ApiResponse<Page<StudyLogResponse>>> getStudyLogWithPaging(
+            @RequestParam(defaultValue = "0")
+            int page,
+            @RequestParam(defaultValue = "10")
+            int size
     ) {
-        PageResponse<StudyLogResponse> response = studyLogService.getStudyLogWithPaging(pageRequest);
+        Page<StudyLogResponse> response = studyLogService.getStudyLogWithPaging(page, size);
 
         // 200 OK 상태 코드와 함께 응답
         return ResponseEntity
@@ -178,18 +184,50 @@ public class StudyLogController {
     }
 
     /**
-     * 카테고리별 페이징 조회
-     * <p>
-     * GET /api/v1/logs/category/{category}/page?page=0&size=5
+     * 카테고리별 학습 일지 페이징 조회
+     * GET /api/v1/logs/category/{category}/page?page=0&size=10
+     *
+     * @param category 카테고리
+     * @param page 페이지 번호
+     * @param size 페이지 크기
+     * @return 페이징된 학습 일지
      */
     @GetMapping("/category/{category}/page")
-    public ResponseEntity<ApiResponse<PageResponse<StudyLogResponse>>> getStudyLogsByCategoryWithPaging(
+    public ResponseEntity<ApiResponse<Page<StudyLogResponse>>> getStudyLogsByCategoryWithPaging(
             @PathVariable
             String category,
-            @ModelAttribute
-            PageRequest pageRequest
+            @RequestParam(defaultValue = "0")
+            int page,
+            @RequestParam(defaultValue = "10")
+            int size
     ) {
-        PageResponse<StudyLogResponse> response = studyLogService.getStudyLogsByCategoryWithPaging(category, pageRequest);
+        Page<StudyLogResponse> response = studyLogService.getStudyLogsByCategoryWithPaging(category, page, size);
+
+        // 200 OK 상태 코드와 함께 응답
+        return ResponseEntity
+                .ok()
+                .body(ApiResponse.success(response));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<Page<StudyLogResponse>>> searchStudyLogsWithPaging(
+            @RequestParam(required = false)
+            String title,
+            @RequestParam(required = false)
+            String category,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate startDate,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate endDate,
+            @RequestParam(defaultValue = "0")
+            int page,
+            @RequestParam(defaultValue = "10")
+            int size
+    ) {
+        Page<StudyLogResponse> response = studyLogService.searchStudyLogsWithPaging(
+                title, category, startDate, endDate, page, size);
 
         // 200 OK 상태 코드와 함께 응답
         return ResponseEntity
