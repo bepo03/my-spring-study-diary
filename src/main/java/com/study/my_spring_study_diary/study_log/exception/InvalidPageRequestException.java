@@ -1,4 +1,4 @@
-package com.study.my_spring_study_diary.global.exception;
+package com.study.my_spring_study_diary.study_log.exception;
 
 import lombok.Getter;
 

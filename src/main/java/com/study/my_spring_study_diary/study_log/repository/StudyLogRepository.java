@@ -4,7 +4,7 @@ import com.study.my_spring_study_diary.study_log.entity.Category;
 import com.study.my_spring_study_diary.study_log.entity.StudyLog;
 import com.study.my_spring_study_diary.global.common.PageRequest;
 import com.study.my_spring_study_diary.global.common.PageResponse;
-import com.study.my_spring_study_diary.global.exception.InvalidPageRequestException;
+import com.study.my_spring_study_diary.study_log.exception.InvalidPageRequestException;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Repository;

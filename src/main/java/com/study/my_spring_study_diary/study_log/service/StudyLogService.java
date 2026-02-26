@@ -11,7 +11,7 @@ import com.study.my_spring_study_diary.study_log.entity.StudyLog;
 import com.study.my_spring_study_diary.study_log.entity.Understanding;
 import com.study.my_spring_study_diary.global.common.PageRequest;
 import com.study.my_spring_study_diary.global.common.PageResponse;
-import com.study.my_spring_study_diary.global.exception.StudyLogNotFoundException;
+import com.study.my_spring_study_diary.study_log.exception.StudyLogNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

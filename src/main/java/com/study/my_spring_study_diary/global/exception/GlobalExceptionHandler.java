@@ -1,6 +1,7 @@
 package com.study.my_spring_study_diary.global.exception;
 
 import com.study.my_spring_study_diary.global.common.ApiResponse;
+import com.study.my_spring_study_diary.study_log.exception.StudyLogNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
