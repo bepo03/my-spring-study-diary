@@ -1,4 +1,4 @@
-package com.study.my_spring_study_diary.entity;
+package com.study.my_spring_study_diary.study_log.entity;
 
 public enum Category {
     JAVA("☕", "Java 기초/심화"),

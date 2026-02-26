@@ -1,12 +1,12 @@
-package com.study.my_spring_study_diary.controller;
+package com.study.my_spring_study_diary.study_log.controller;
 
-import com.study.my_spring_study_diary.common.Page;
-import com.study.my_spring_study_diary.dto.request.StudyLogCreateRequest;
-import com.study.my_spring_study_diary.dto.request.StudyLogUpdateRequest;
-import com.study.my_spring_study_diary.dto.response.StudyLogDeleteResponse;
-import com.study.my_spring_study_diary.dto.response.StudyLogResponse;
+import com.study.my_spring_study_diary.study_log.common.Page;
+import com.study.my_spring_study_diary.study_log.dto.request.StudyLogCreateRequest;
+import com.study.my_spring_study_diary.study_log.dto.request.StudyLogUpdateRequest;
+import com.study.my_spring_study_diary.study_log.dto.response.StudyLogDeleteResponse;
+import com.study.my_spring_study_diary.study_log.dto.response.StudyLogResponse;
 import com.study.my_spring_study_diary.global.common.ApiResponse;
-import com.study.my_spring_study_diary.service.StudyLogService;
+import com.study.my_spring_study_diary.study_log.service.StudyLogService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

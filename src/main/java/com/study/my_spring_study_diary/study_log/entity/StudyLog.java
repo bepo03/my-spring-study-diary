@@ -1,8 +1,7 @@
-package com.study.my_spring_study_diary.entity;
+package com.study.my_spring_study_diary.study_log.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

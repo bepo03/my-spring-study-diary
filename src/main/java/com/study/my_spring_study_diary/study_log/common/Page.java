@@ -1,4 +1,4 @@
-package com.study.my_spring_study_diary.common;
+package com.study.my_spring_study_diary.study_log.common;
 
 import lombok.Getter;
 

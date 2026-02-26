@@ -1,4 +1,4 @@
-package com.study.my_spring_study_diary.entity;
+package com.study.my_spring_study_diary.study_log.entity;
 
 public enum Understanding {
     VERY_GOOD("😎", "완벽히 이해했어요"),

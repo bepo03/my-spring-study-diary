@@ -1,7 +1,7 @@
-package com.study.my_spring_study_diary.repository;
+package com.study.my_spring_study_diary.study_log.repository;
 
-import com.study.my_spring_study_diary.entity.Category;
-import com.study.my_spring_study_diary.entity.StudyLog;
+import com.study.my_spring_study_diary.study_log.entity.Category;
+import com.study.my_spring_study_diary.study_log.entity.StudyLog;
 import com.study.my_spring_study_diary.global.common.PageRequest;
 import com.study.my_spring_study_diary.global.common.PageResponse;
 import com.study.my_spring_study_diary.global.exception.InvalidPageRequestException;

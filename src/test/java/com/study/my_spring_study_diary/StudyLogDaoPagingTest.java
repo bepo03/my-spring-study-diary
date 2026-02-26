@@ -1,10 +1,10 @@
 package com.study.my_spring_study_diary;
 
-import com.study.my_spring_study_diary.common.Page;
-import com.study.my_spring_study_diary.dao.StudyLogDao;
-import com.study.my_spring_study_diary.entity.Category;
-import com.study.my_spring_study_diary.entity.StudyLog;
-import com.study.my_spring_study_diary.entity.Understanding;
+import com.study.my_spring_study_diary.study_log.common.Page;
+import com.study.my_spring_study_diary.study_log.dao.StudyLogDao;
+import com.study.my_spring_study_diary.study_log.entity.Category;
+import com.study.my_spring_study_diary.study_log.entity.StudyLog;
+import com.study.my_spring_study_diary.study_log.entity.Understanding;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

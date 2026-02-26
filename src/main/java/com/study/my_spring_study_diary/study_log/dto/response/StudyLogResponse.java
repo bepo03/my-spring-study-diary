@@ -1,7 +1,7 @@
-package com.study.my_spring_study_diary.dto.response;
+package com.study.my_spring_study_diary.study_log.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.study.my_spring_study_diary.entity.StudyLog;
+import com.study.my_spring_study_diary.study_log.entity.StudyLog;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

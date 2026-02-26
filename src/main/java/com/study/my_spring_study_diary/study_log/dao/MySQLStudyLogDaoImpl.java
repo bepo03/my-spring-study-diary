@@ -1,9 +1,9 @@
-package com.study.my_spring_study_diary.dao;
+package com.study.my_spring_study_diary.study_log.dao;
 
-import com.study.my_spring_study_diary.common.Page;
-import com.study.my_spring_study_diary.entity.Category;
-import com.study.my_spring_study_diary.entity.StudyLog;
-import com.study.my_spring_study_diary.entity.Understanding;
+import com.study.my_spring_study_diary.study_log.common.Page;
+import com.study.my_spring_study_diary.study_log.entity.Category;
+import com.study.my_spring_study_diary.study_log.entity.StudyLog;
+import com.study.my_spring_study_diary.study_log.entity.Understanding;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

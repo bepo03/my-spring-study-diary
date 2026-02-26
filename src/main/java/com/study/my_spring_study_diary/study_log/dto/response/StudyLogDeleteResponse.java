@@ -1,4 +1,4 @@
-package com.study.my_spring_study_diary.dto.response;
+package com.study.my_spring_study_diary.study_log.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
