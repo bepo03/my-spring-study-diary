@@ -3,11 +3,13 @@ package com.study.my_spring_study_diary.auth.entity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 권한 Enum
+ */
 @Getter
 @RequiredArgsConstructor
 public enum UserRole {
-    ROLE_USER("일반 사용자"),
-    ROLE_ADMIN("관리자");
-
-    private final String description;
+    USER,
+    ADMIN,
+    MANAGER
 }

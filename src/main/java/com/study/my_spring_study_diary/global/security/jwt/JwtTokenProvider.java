@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class JwtTokenProvider {
+
     private final SecretKey secretKey;
     private final long accessTokenValidityInMilliseconds;
     private final long refreshTokenValidityInMilliseconds;
@@ -34,9 +35,8 @@ public class JwtTokenProvider {
         // 설정 secret 문자열로부터 HMAC-SHA 서명용 SecretKey 생성
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         // 초 -> 밀리초 변환
-        this.accessTokenValidityInMilliseconds = accessTokenValidity * 1_000;
-        // 초 -> 밀리초 변환
-        this.refreshTokenValidityInMilliseconds = refreshTokenValidity * 1_000;
+        this.accessTokenValidityInMilliseconds = accessTokenValidity * 1000;
+        this.refreshTokenValidityInMilliseconds = refreshTokenValidity * 1000;
     }
 
     /**

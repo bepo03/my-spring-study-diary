@@ -25,6 +25,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * JWT 인증 필터
+ * 요청당 한번 만 실행되도록 OncePerRequestFilter를 확장합니다.
+ * Authorization 헤더에서 JWT를 추출하고 사용자를 인증합니다.
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor

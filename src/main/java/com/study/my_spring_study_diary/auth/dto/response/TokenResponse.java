@@ -6,38 +6,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 로그인 응답 DTO
+ * 토큰 응답 DTO
  */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoginResponse {
+public class TokenResponse {
 
     private String accessToken;
     private String refreshToken;
     private String tokenType;
     private Long expiresIn;
-    private String username;
-    private String email;
 
     /**
-     * 기본 토큰 유형으로 로그인 응답 생성
+     * 기본 토큰 유형으로 토큰 응답 생성
      */
-    public static LoginResponse of(
+    public static TokenResponse of(
             String accessToken,
             String refreshToken,
-            Long expiresIn,
-            String username,
-            String email
+            Long expiresIn
     ) {
-        return LoginResponse.builder()
+        return TokenResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .tokenType("Bearer")
                 .expiresIn(expiresIn)
-                .username(username)
-                .email(email)
                 .build();
     }
 }
